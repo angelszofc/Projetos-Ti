@@ -3,18 +3,32 @@
 #include <stdlib.h>
 
 
-void Chama_Menu(void){
+int Chama_Menu(void){
     
-    printf("Bem vindo ao Super Trunfo!\n");
-    printf("----------MENU PRINCIPAL---------\n");
-    printf("Escolha uma opcao abaixo:\n");
-    printf("1 - Cadastrar Cartas\n");
-    printf("2 - Consultar Cartas\n");
-    printf("3 - Opcoes\n");
-    printf("4 - Sair\n");
-    printf("---------------------------------\n");
+    int menu;
+    char s[20];
 
-    return;
+    while (menu == 0 || menu > 4)
+    {
+        printf("\nBem vindo ao Super Trunfo!\n");
+        printf("----------MENU PRINCIPAL---------\n");
+        printf("Escolha uma opcao abaixo:\n");
+        printf("1 - Cadastrar Cartas\n");
+        printf("2 - Consultar Cartas\n");
+        printf("3 - Opcoes\n");
+        printf("4 - Sair\n");
+        printf("---------------------------------\n");
+        scanf("%s", &s);
+        menu = atoi(s);//Função para validar se a variavel é um numero
+
+        if (menu == 0 || menu > 4)
+        {
+            printf("Valor Invalido! Tente novamente...\n\n");
+        }
+                    
+    } 
+
+    return(menu);
 }
 
 int Confirma_Cadastro(int valor){
@@ -58,7 +72,7 @@ void Consulta(int i, char *v1[3][4], char *v2[20][4], char *v3[20][4], int v4[4]
     if (i == 5)
     {
         i = 0;
-        while(i != 4)
+        while(i >= 4)
         {
             i++;
 
@@ -78,7 +92,7 @@ void Consulta(int i, char *v1[3][4], char *v2[20][4], char *v3[20][4], int v4[4]
             {
                 carta = "Quarta";
             }
-
+            printf("\n---------------------------------");
             printf("\nDados da %s carta:\n", carta);
             printf("Codigo da Carta: %s\n",v1[i]);
             printf("Estado: %s\n",v2[i]);
@@ -92,6 +106,7 @@ void Consulta(int i, char *v1[3][4], char *v2[20][4], char *v3[20][4], int v4[4]
     }
     else
     {
+        printf("\n---------------------------------");
         printf("\nDados da %s carta:\n", carta);
         printf("Codigo da Carta: %s\n",v1[i]);
         printf("Estado: %s\n",v2[i]);
@@ -107,8 +122,6 @@ void Consulta(int i, char *v1[3][4], char *v2[20][4], char *v3[20][4], int v4[4]
 
 void Cadastro(int i, char *v1[3][4], char *v2[20][4], char *v3[20][4], int v4[4], int v5[4], float v6[4], float v7[4]){
     
-    int ii;
-    float id;
     char *carta;
     char s[20];
 
@@ -129,7 +142,7 @@ void Cadastro(int i, char *v1[3][4], char *v2[20][4], char *v3[20][4], int v4[4]
         carta = "Quarta";
     }
     
-
+    printf("\n---------------------------------");
     printf("Digite o codigo da %s carta:\n", carta);
     scanf(" %s", &v1[i]); 
     printf("Digite a Sigla do Estado: (Exemplo: MG) \n");
@@ -222,20 +235,8 @@ int Valida_Entrada(int valida){
     // Cadastro das Cartas:
     /*Criando Funções para Menu*/
     while (menu != 4)
-    {
-         while (menu == 0 || menu > 4)
-        {
-            Chama_Menu();
-            scanf("%s", &s);
-            menu = atoi(s);//Função para validar se a variavel é um numero
-
-            if (menu == 0 || menu > 4)
-            {
-                printf("Valor Invalido! Tente novamente...\n\n");
-            }
-                    
-        }        
-        
+    {              
+        menu = Chama_Menu();
 
         switch (menu)
         {
@@ -290,27 +291,26 @@ int Valida_Entrada(int valida){
                     }
 
                     valor = ii;
-                        /*Entrada de dados da cartas*/
-                        Cadastro(ii, cod_carta, estado, nome_cidade, populacao, num_ponto_tur, aream2, pib);            
-                        /*Imprimindo dados da cartas*/
-                        Consulta(ii, cod_carta, estado, nome_cidade, populacao, num_ponto_tur, aream2, pib);
-                        Confirma_Cadastro(valor);
-                        if (ii == 4)
-                        {
-                            printf("Cadastro Finalizado!\n");
-                            printf("Pressione Enter para continuar!\n");
-                            getch();
+                    /*Entrada de dados da cartas*/
+                    Cadastro(ii, cod_carta, estado, nome_cidade, populacao, num_ponto_tur, aream2, pib);            
+                    /*Imprimindo dados da cartas*/
+                    Consulta(ii, cod_carta, estado, nome_cidade, populacao, num_ponto_tur, aream2, pib);
+                    Confirma_Cadastro(valor);
+                    if (ii == 4)
+                    {
+                        printf("Cadastro Finalizado!\n");
+                        printf("Pressione Enter para continuar!\n");
+                        getch();
                             
-                            continue;
-                        }
-                        
+                        continue;
+                    }
                         break;
 
-                        case 2:
-                            printf("Cadastro Finalizado!\n");
-                            printf("Pressione Enter para continuar!\n");
-                            getch();
-                            break;
+                    case 2:
+                        printf("Cadastro Finalizado!\n");
+                        printf("Pressione Enter para continuar!\n");
+                        getch();
+                        break;
                     
                     default:
                         printf("Opção Invalida!\n");
@@ -368,6 +368,7 @@ int Valida_Entrada(int valida){
                     Consulta(i, cod_carta, estado, nome_cidade, populacao, num_ponto_tur, aream2, pib);
                     break;
                 case 5:
+
                     Consulta(i, cod_carta, estado, nome_cidade, populacao, num_ponto_tur, aream2, pib);
                     break;
                 default:
